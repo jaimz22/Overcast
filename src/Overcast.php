@@ -50,7 +50,7 @@ class Overcast
 			$cacheAge = (new \DateTime())->getTimestamp() - (new \DateTime($responseHeaders['cache']['expires']))->getTimestamp();
 		}
 
-		return new Forecast($response,$cacheAge, $responseTime);
+		return new Forecast($response,$cacheAge, $responseHeaders['responseTime']);
 	}
 
 	/**
@@ -83,7 +83,7 @@ class Overcast
 					$responseHeaders['apiCalls'] = trim(substr($header,21));
 					break;
 				case (substr($header,0,16) === 'X-Response-Time:'):
-					$responseHeaders['responseTime'] = trim(substr($header,16));
+					$responseHeaders['responseTime'] = (int)trim(substr($header,16));
 					break;
 				default:
 					break;
