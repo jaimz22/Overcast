@@ -1,0 +1,12 @@
+{
+    "name": "vertigolabs/overcast",
+    "description": "An easy to use wrapper for the Forecast.io API",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "James Murray",
+            "email": "jaimz@vertigolabs.org"
+        }
+    ],
+    "require": {}
+}
