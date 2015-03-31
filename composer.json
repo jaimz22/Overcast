@@ -8,5 +8,9 @@
             "email": "jaimz@vertigolabs.org"
         }
     ],
-    "require": {}
+	"autoload": {
+	  "psr-4": {
+		"VertigoLabs\\Overcast\\": "src/"
+	  }
+	}
 }
