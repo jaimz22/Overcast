@@ -128,14 +128,14 @@ class DataPoint
 			(isset($data['temperatureMin'])?$data['temperatureMin']:null),
 			(isset($data['temperatureMinTime'])?$data['temperatureMinTime']:null),
 			(isset($data['temperatureMax'])?$data['temperatureMax']:null),
-			(isset($data['temperatureMaxTime'])?$data['temperatureTime']:null)
+			(isset($data['temperatureMaxTime'])?$data['temperatureMaxTime']:null)
 		);
 		$this->apparentTemperature = new Temperature(
 			(isset($data['apparentTemperature'])?$data['apparentTemperature']:null),
 			(isset($data['apparentTemperatureMin'])?$data['apparentTemperatureMin']:null),
 			(isset($data['apparentTemperatureMinTime'])?$data['apparentTemperatureMinTime']:null),
 			(isset($data['apparentTemperatureMax'])?$data['apparentTemperatureMax']:null),
-			(isset($data['apparentTemperatureMaxTime'])?$data['apparentTemperatureTime']:null)
+			(isset($data['apparentTemperatureMaxTime'])?$data['apparentTemperatureMaxTime']:null)
 		);
 
 		if (isset($data['dewPoint'])) {
