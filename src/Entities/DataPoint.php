@@ -315,6 +315,4 @@ class DataPoint
 	{
 		return $this->ozone;
 	}
-
-
 }
