@@ -8,6 +8,9 @@
             "email": "jaimz@vertigolabs.org"
         }
     ],
+    "suggest": {
+        "guzzlehttp/guzzle": "Allows for better handling of http connections to Forecast.io webservice"
+    },
 	"autoload": {
 	  "psr-4": {
 		"VertigoLabs\\Overcast\\": "src/"

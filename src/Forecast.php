@@ -5,14 +5,20 @@
  * @date: 3/31/2015
  * @time: 1:20 PM
  */
-
 namespace VertigoLabs\Overcast;
 
+use VertigoLabs\Overcast\ValueObjects\Alert;
+use VertigoLabs\Overcast\ValueObjects\DataBlock;
+use VertigoLabs\Overcast\ValueObjects\DataPoint;
 
-use VertigoLabs\Overcast\Entities\Alert;
-use VertigoLabs\Overcast\Entities\DataBlock;
-use VertigoLabs\Overcast\Entities\DataPoint;
-
+/**
+ * Class Forecast
+ *
+ * The Forecast class represents the data returned
+ * from the Forecast.io API
+ *
+ * @package VertigoLabs\Overcast
+ */
 class Forecast
 {
 	/**
@@ -62,7 +68,7 @@ class Forecast
 	private $responseTime;
 
 	/**
-	 * @param $forecastData
+	 * @param array $forecastData
 	 * @param int|null $cacheTTL
 	 * @param int|null $responseTime
 	 */
@@ -166,7 +172,7 @@ class Forecast
 	}
 
 	/**
-	 * @return Entities\Alert[]
+	 * @return ValueObjects\Alert[]
 	 */
 	public function getAlerts()
 	{

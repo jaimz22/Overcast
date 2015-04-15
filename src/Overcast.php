@@ -4,24 +4,74 @@
  * @copyright:
  * @date: 3/31/2015
  * @time: 1:17 PM
+ *
+ *
+ * DISCLAIMER: This software is provided free of charge, and may be distributed.
+ * It is not the fault of the author if this software causes damages, loss of data
+ * loss of life, pregnant girlfriends, deep horrible depression, cupcakes, or good times
+ * with friends.
  */
-
 namespace VertigoLabs\Overcast;
 
+use VertigoLabs\Overcast\ClientAdapters\FileGetContentsClientAdapter;
+use VertigoLabs\Overcast\ClientAdapters\GuzzleClientAdapter;
 
+/**
+ * Class Overcast
+ *
+ * The Overcast class provides access to the Forecast.io API
+ *
+ * @package VertigoLabs\Overcast
+ */
 class Overcast
 {
 	const API_ENDPOINT = 'https://api.forecast.io/forecast/';
 
-	private $apiKey = null;
+	/**
+	 * Private API Key
+	 * @var string
+	 */
+	private static $apiKey = null;
+	/**
+	 * The number of API calls made today
+	 * @var int
+	 */
 	private $apiCalls = 0;
+	/**
+	 * The adapter used to connect to the Forecast.io webservice
+	 * @var ClientAdapterInterface
+	 */
+	private $adapter;
 
-	public function __construct($apiKey)
+	/**
+	 * Construct the Overcast class.
+	 *
+	 * You may optionally specify an adapter class which is used
+	 * to connect to the Forecast.io API. If no adapter is specified
+	 * a default will be chosen. If the Guzzle client is available the
+	 * GuzzleAdapter will be chosen, otherwise the FileGetContentsAdapter
+	 * will be used.
+	 *
+	 * @param string $apiKey
+	 * @param ClientAdapterInterface $adapter
+	 */
+	public function __construct($apiKey, ClientAdapterInterface $adapter = null)
 	{
-		$this->apiKey = $apiKey;
+		self::$apiKey = $apiKey;
+		if (is_null($adapter)) {
+			if (class_exists('GuzzleHttp\Client',false)) {
+				$adapter = new GuzzleClientAdapter();
+			}else{
+				$adapter = new FileGetContentsClientAdapter();
+			}
+		}
+		$this->adapter = $adapter;
 	}
 
 	/**
+	 * Retrieve the forecast for the specified latitude and longitude and
+	 * optionally the specified date and time.
+	 *
 	 * @param $latitude
 	 * @param $longitude
 	 * @param \DateTime $time
@@ -30,14 +80,8 @@ class Overcast
 	 */
 	public function getForecast($latitude, $longitude, \DateTime $time = null)
 	{
-		$requestUrl = self::API_ENDPOINT.$this->apiKey.'/'.$latitude.','.$longitude;
-
-		if (!is_null($time)) {
-			$requestUrl .= ','.$time->getTimestamp();
-		}
-
-		$response = json_decode(file_get_contents($requestUrl),true);
-		$responseHeaders = $this->parseForecastResponseHeaders($http_response_header);
+		$response = $this->adapter->getForecast($latitude,$longitude, $time);
+		$responseHeaders = $this->adapter->getHeaders();
 
 		if (!is_null($responseHeaders['apiCalls'])) {
 			$this->apiCalls = $responseHeaders['apiCalls'];
@@ -54,6 +98,8 @@ class Overcast
 	}
 
 	/**
+	 * Returns the number of API calls made "today"
+	 *
 	 * @return int
 	 */
 	public function getApiCalls()
@@ -61,34 +107,13 @@ class Overcast
 		return $this->apiCalls;
 	}
 
-	private function parseForecastResponseHeaders($headers)
+	/**
+	 * Returns the current API key
+	 *
+	 * @return string
+	 */
+	public static function getApiKey()
 	{
-		$responseHeaders = [
-			'cache' => [
-				'maxAge'=>null,
-				'expires'=>null
-			],
-			'responseTime'=>null,
-			'apiCalls'=>null
-		];
-		foreach ($headers as $header) {
-			switch (true) {
-				case (substr($header,0,14) === 'Cache-Control:'):
-					$responseHeaders['cache']['maxAge'] = trim(substr($header,strrpos($header,'=')+1));
-					break;
-				case (substr($header,0,8) === 'Expires:'):
-					$responseHeaders['cache']['expires'] = trim(substr($header,8));
-					break;
-				case (substr($header,0,21) === 'X-Forecast-API-Calls:'):
-					$responseHeaders['apiCalls'] = trim(substr($header,21));
-					break;
-				case (substr($header,0,16) === 'X-Response-Time:'):
-					$responseHeaders['responseTime'] = (int)trim(substr($header,16));
-					break;
-				default:
-					break;
-			}
-		}
-		return $responseHeaders;
+		return self::$apiKey;
 	}
 }

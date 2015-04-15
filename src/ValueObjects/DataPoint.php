@@ -6,7 +6,7 @@
  * @time: 1:24 PM
  */
 
-namespace VertigoLabs\Overcast\Entities;
+namespace VertigoLabs\Overcast\ValueObjects;
 
 
 class DataPoint

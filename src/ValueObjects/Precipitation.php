@@ -6,7 +6,7 @@
  * @time: 1:27 PM
  */
 
-namespace VertigoLabs\Overcast\Entities;
+namespace VertigoLabs\Overcast\ValueObjects;
 
 
 class Precipitation

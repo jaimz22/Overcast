@@ -6,7 +6,7 @@
  * @time: 1:33 PM
  */
 
-namespace VertigoLabs\Overcast\Entities;
+namespace VertigoLabs\Overcast\ValueObjects;
 
 
 class Alert
