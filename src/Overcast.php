@@ -59,7 +59,7 @@ class Overcast
 	{
 		self::$apiKey = $apiKey;
 		if (is_null($adapter)) {
-			if (class_exists('GuzzleHttp\Client',false)) {
+			if (class_exists('GuzzleHttp\Client',true)) {
 				$adapter = new GuzzleClientAdapter();
 			}else{
 				$adapter = new FileGetContentsClientAdapter();
@@ -80,8 +80,9 @@ class Overcast
 	 */
 	public function getForecast($latitude, $longitude, \DateTime $time = null)
 	{
-		$response = $this->adapter->getForecast($latitude,$longitude, $time);
-		$responseHeaders = $this->adapter->getHeaders();
+		try{
+			$response = $this->adapter->getForecast($latitude, $longitude, $time);
+			$responseHeaders = $this->adapter->getHeaders();
 
 		if (!is_null($responseHeaders['apiCalls'])) {
 			$this->apiCalls = $responseHeaders['apiCalls'];
@@ -94,7 +95,10 @@ class Overcast
 			$cacheAge = (new \DateTime())->getTimestamp() - (new \DateTime($responseHeaders['cache']['expires']))->getTimestamp();
 		}
 
-		return new Forecast($response,$cacheAge, $responseHeaders['responseTime']);
+			return new Forecast($response, $cacheAge, $responseHeaders['responseTime']);
+		}catch(\Exception $e) {
+			return null;
+		}
 	}
 
 	/**
