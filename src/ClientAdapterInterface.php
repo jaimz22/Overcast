@@ -24,7 +24,7 @@ interface ClientAdapterInterface
 	 * @param float $latitude
 	 * @param float $longitude
 	 * @param \DateTime $time
-     * @param array $parameters
+	 * @param array $parameters
 	 *
 	 * @return array
 	 */

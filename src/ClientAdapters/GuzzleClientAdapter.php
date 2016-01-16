@@ -46,7 +46,7 @@ class GuzzleClientAdapter implements ClientAdapterInterface
 	 * @param float $latitude
 	 * @param float $longitude
 	 * @param \DateTime $time
-     * @param array $parameters
+	 * @param array $parameters
 	 *
 	 * @return array
 	 */
@@ -54,13 +54,13 @@ class GuzzleClientAdapter implements ClientAdapterInterface
 	{
 		$this->requestedUrl = Overcast::API_ENDPOINT.Overcast::getApiKey().'/'.$latitude.','.$longitude;
 
-        if (!is_null($time)) {
-            $this->requestedUrl .= ','.$time->getTimestamp();
-        }
+		if (!is_null($time)) {
+			$this->requestedUrl .= ','.$time->getTimestamp();
+		}
 
-        if (!is_null($parameters)) {
-            $this->requestedUrl .= '?' . http_build_query($parameters);
-        }
+		if (!is_null($parameters)) {
+			$this->requestedUrl .= '?' . http_build_query($parameters);
+		}
 
 		$response = $this->guzzleClient->get($this->requestedUrl);
 		$this->responseHeaders = [
