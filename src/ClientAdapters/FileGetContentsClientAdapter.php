@@ -36,7 +36,7 @@ class FileGetContentsClientAdapter implements ClientAdapterInterface
 	 *
 	 * @return array
 	 */
-	public function getForecast($latitude, $longitude, \DateTime $time = null, array $parameters)
+	public function getForecast($latitude, $longitude, \DateTime $time = null, array $parameters = null)
 	{
 		$this->requestedUrl = Overcast::API_ENDPOINT.Overcast::getApiKey().'/'.$latitude.','.$longitude;
 

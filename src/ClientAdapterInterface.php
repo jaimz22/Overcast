@@ -28,7 +28,7 @@ interface ClientAdapterInterface
 	 *
 	 * @return array
 	 */
-	public function getForecast($latitude, $longitude, \DateTime $time = null, array $parameters);
+	public function getForecast($latitude, $longitude, \DateTime $time = null, array $parameters = null);
 
 	/**
 	 * Returns the relevant response headers from the Forecast.io API
