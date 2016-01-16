@@ -75,13 +75,14 @@ class Overcast
 	 * @param $latitude
 	 * @param $longitude
 	 * @param \DateTime $time
+     * @param array $parameters
 	 *
 	 * @return Forecast
 	 */
-	public function getForecast($latitude, $longitude, \DateTime $time = null)
+	public function getForecast($latitude, $longitude, \DateTime $time = null, array $parameters = null)
 	{
 		try{
-			$response = $this->adapter->getForecast($latitude, $longitude, $time);
+			$response = $this->adapter->getForecast($latitude, $longitude, $time, $parameters);
 			$responseHeaders = $this->adapter->getHeaders();
 
 		if (!is_null($responseHeaders['apiCalls'])) {

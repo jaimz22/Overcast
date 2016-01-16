@@ -32,16 +32,21 @@ class FileGetContentsClientAdapter implements ClientAdapterInterface
 	 * @param float $latitude
 	 * @param float $longitude
 	 * @param \DateTime $time
+     * @param array $parameters
 	 *
 	 * @return array
 	 */
-	public function getForecast($latitude, $longitude, \DateTime $time = null)
+	public function getForecast($latitude, $longitude, \DateTime $time = null, array $parameters)
 	{
 		$this->requestedUrl = Overcast::API_ENDPOINT.Overcast::getApiKey().'/'.$latitude.','.$longitude;
 
 		if (!is_null($time)) {
 			$this->requestedUrl .= ','.$time->getTimestamp();
 		}
+
+        if (!is_null($parameters)) {
+            $this->requestedUrl .= '?' . http_build_query($parameters);
+        }
 
 		$this->response = json_decode(file_get_contents($this->requestedUrl),true);
 		$this->responseHeaders = $this->parseForecastResponseHeaders($http_response_header);
