@@ -21,84 +21,84 @@ use VertigoLabs\Overcast\Overcast;
  */
 class FileGetContentsClientAdapter implements ClientAdapterInterface
 {
-	private $requestedUrl = null;
-	private $response = null;
-	private $responseHeaders = [];
+    private $requestedUrl = null;
+    private $response = null;
+    private $responseHeaders = [];
 
-	/**
-	 * Returns the response data from the Forecast.io in the
-	 * form of an array
-	 *
-	 * @param float $latitude
-	 * @param float $longitude
-	 * @param \DateTime $time
-	 * @param array $parameters
-	 *
-	 * @return array
-	 */
-	public function getForecast($latitude, $longitude, \DateTime $time = null, array $parameters = null)
-	{
-		$this->requestedUrl = Overcast::API_ENDPOINT.Overcast::getApiKey().'/'.$latitude.','.$longitude;
+    /**
+     * Returns the response data from the Forecast.io in the
+     * form of an array
+     *
+     * @param float $latitude
+     * @param float $longitude
+     * @param \DateTime $time
+     * @param array $parameters
+     *
+     * @return array
+     */
+    public function getForecast($latitude, $longitude, \DateTime $time = null, array $parameters = null)
+    {
+        $this->requestedUrl = Overcast::API_ENDPOINT . Overcast::getApiKey() . '/' . $latitude . ',' . $longitude;
 
         if (!is_null($time)) {
-            $this->requestedUrl .= ','.$time->getTimestamp();
+            $this->requestedUrl .= ',' . $time->getTimestamp();
         }
 
         if (!is_null($parameters)) {
             $this->requestedUrl .= '?' . http_build_query($parameters);
         }
 
-		$this->response = json_decode(file_get_contents($this->requestedUrl),true);
-		$this->responseHeaders = $this->parseForecastResponseHeaders($http_response_header);
+        $this->response = json_decode(file_get_contents($this->requestedUrl), true);
+        $this->responseHeaders = $this->parseForecastResponseHeaders($http_response_header);
 
-		return $this->response;
-	}
+        return $this->response;
+    }
 
-	/**
-	 * Returns the relevant response headers from the Forecast.io API
-	 *
-	 * @return array
-	 */
-	public function getHeaders()
-	{
-		return $this->responseHeaders;
-	}
+    /**
+     * Returns the relevant response headers from the Forecast.io API
+     *
+     * @return array
+     */
+    public function getHeaders()
+    {
+        return $this->responseHeaders;
+    }
 
-	/**
-	 * Parses the response headers
-	 *
-	 * @param array $headers
-	 *
-	 * @return array
-	 */
-	private function parseForecastResponseHeaders($headers)
-	{
-		$responseHeaders = [
-			'cache' => [
-				'maxAge'=>null,
-				'expires'=>null
-			],
-			'responseTime'=>null,
-			'apiCalls'=>null
-		];
-		foreach ($headers as $header) {
-			switch (true) {
-				case (substr($header,0,14) === 'Cache-Control:'):
-					$responseHeaders['cache']['maxAge'] = trim(substr($header,strrpos($header,'=')+1));
-					break;
-				case (substr($header,0,8) === 'Expires:'):
-					$responseHeaders['cache']['expires'] = trim(substr($header,8));
-					break;
-				case (substr($header,0,21) === 'X-Forecast-API-Calls:'):
-					$responseHeaders['apiCalls'] = trim(substr($header,21));
-					break;
-				case (substr($header,0,16) === 'X-Response-Time:'):
-					$responseHeaders['responseTime'] = (int)trim(substr($header,16));
-					break;
-				default:
-					break;
-			}
-		}
-		return $responseHeaders;
-	}
+    /**
+     * Parses the response headers
+     *
+     * @param array $headers
+     *
+     * @return array
+     */
+    private function parseForecastResponseHeaders($headers)
+    {
+        $responseHeaders = [
+            'cache' => [
+                'maxAge' => null,
+                'expires' => null
+            ],
+            'responseTime' => null,
+            'apiCalls' => null
+        ];
+        foreach ($headers as $header) {
+            switch (true) {
+                case (substr($header, 0, 14) === 'Cache-Control:'):
+                    $responseHeaders['cache']['maxAge'] = trim(substr($header, strrpos($header, '=') + 1));
+                    break;
+                case (substr($header, 0, 8) === 'Expires:'):
+                    $responseHeaders['cache']['expires'] = trim(substr($header, 8));
+                    break;
+                case (substr($header, 0, 21) === 'X-Forecast-API-Calls:'):
+                    $responseHeaders['apiCalls'] = trim(substr($header, 21));
+                    break;
+                case (substr($header, 0, 16) === 'X-Response-Time:'):
+                    $responseHeaders['responseTime'] = (int)trim(substr($header, 16));
+                    break;
+                default:
+                    break;
+            }
+        }
+        return $responseHeaders;
+    }
 }
