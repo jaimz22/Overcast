@@ -25,99 +25,100 @@ use VertigoLabs\Overcast\ClientAdapters\GuzzleClientAdapter;
  */
 class Overcast
 {
-	const API_ENDPOINT = 'https://api.forecast.io/forecast/';
+    const API_ENDPOINT = 'https://api.forecast.io/forecast/';
 
-	/**
-	 * Private API Key
-	 * @var string
-	 */
-	private static $apiKey = null;
-	/**
-	 * The number of API calls made today
-	 * @var int
-	 */
-	private $apiCalls = 0;
-	/**
-	 * The adapter used to connect to the Forecast.io webservice
-	 * @var ClientAdapterInterface
-	 */
-	private $adapter;
+    /**
+     * Private API Key
+     * @var string
+     */
+    private static $apiKey = null;
+    /**
+     * The number of API calls made today
+     * @var int
+     */
+    private $apiCalls = 0;
+    /**
+     * The adapter used to connect to the Forecast.io webservice
+     * @var ClientAdapterInterface
+     */
+    private $adapter;
 
-	/**
-	 * Construct the Overcast class.
-	 *
-	 * You may optionally specify an adapter class which is used
-	 * to connect to the Forecast.io API. If no adapter is specified
-	 * a default will be chosen. If the Guzzle client is available the
-	 * GuzzleAdapter will be chosen, otherwise the FileGetContentsAdapter
-	 * will be used.
-	 *
-	 * @param string $apiKey
-	 * @param ClientAdapterInterface $adapter
-	 */
-	public function __construct($apiKey, ClientAdapterInterface $adapter = null)
-	{
-		self::$apiKey = $apiKey;
-		if (is_null($adapter)) {
-			if (class_exists('GuzzleHttp\Client',true)) {
-				$adapter = new GuzzleClientAdapter();
-			}else{
-				$adapter = new FileGetContentsClientAdapter();
-			}
-		}
-		$this->adapter = $adapter;
-	}
+    /**
+     * Construct the Overcast class.
+     *
+     * You may optionally specify an adapter class which is used
+     * to connect to the Forecast.io API. If no adapter is specified
+     * a default will be chosen. If the Guzzle client is available the
+     * GuzzleAdapter will be chosen, otherwise the FileGetContentsAdapter
+     * will be used.
+     *
+     * @param string $apiKey
+     * @param ClientAdapterInterface $adapter
+     */
+    public function __construct($apiKey, ClientAdapterInterface $adapter = null)
+    {
+        self::$apiKey = $apiKey;
+        if (is_null($adapter)) {
+            if (class_exists('GuzzleHttp\Client', true)) {
+                $adapter = new GuzzleClientAdapter();
+            } else {
+                $adapter = new FileGetContentsClientAdapter();
+            }
+        }
+        $this->adapter = $adapter;
+    }
 
-	/**
-	 * Retrieve the forecast for the specified latitude and longitude and
-	 * optionally the specified date and time.
-	 *
-	 * @param $latitude
-	 * @param $longitude
-	 * @param \DateTime $time
-	 *
-	 * @return Forecast
-	 */
-	public function getForecast($latitude, $longitude, \DateTime $time = null)
-	{
-		try{
-			$response = $this->adapter->getForecast($latitude, $longitude, $time);
-			$responseHeaders = $this->adapter->getHeaders();
+    /**
+     * Retrieve the forecast for the specified latitude and longitude and
+     * optionally the specified date and time.
+     *
+     * @param $latitude
+     * @param $longitude
+     * @param \DateTime $time
+     * @param array $parameters
+     *
+     * @return Forecast
+     */
+    public function getForecast($latitude, $longitude, \DateTime $time = null, array $parameters = null)
+    {
+        try {
+            $response = $this->adapter->getForecast($latitude, $longitude, $time, $parameters);
+            $responseHeaders = $this->adapter->getHeaders();
 
-		if (!is_null($responseHeaders['apiCalls'])) {
-			$this->apiCalls = $responseHeaders['apiCalls'];
-		}
+            if (!is_null($responseHeaders['apiCalls'])) {
+                $this->apiCalls = $responseHeaders['apiCalls'];
+            }
 
-		$cacheAge = 0;
-		if (!is_null($responseHeaders['cache']['maxAge'])) {
-			$cacheAge = $responseHeaders['cache']['maxAge'];
-		}elseif(!is_null($responseHeaders['cache']['expires'])) {
-			$cacheAge = (new \DateTime())->getTimestamp() - (new \DateTime($responseHeaders['cache']['expires']))->getTimestamp();
-		}
+            $cacheAge = 0;
+            if (!is_null($responseHeaders['cache']['maxAge'])) {
+                $cacheAge = $responseHeaders['cache']['maxAge'];
+            } elseif (!is_null($responseHeaders['cache']['expires'])) {
+                $cacheAge = (new \DateTime())->getTimestamp() - (new \DateTime($responseHeaders['cache']['expires']))->getTimestamp();
+            }
 
-			return new Forecast($response, $cacheAge, $responseHeaders['responseTime']);
-		}catch(\Exception $e) {
-			return null;
-		}
-	}
+            return new Forecast($response, $cacheAge, $responseHeaders['responseTime']);
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
 
-	/**
-	 * Returns the number of API calls made "today"
-	 *
-	 * @return int
-	 */
-	public function getApiCalls()
-	{
-		return $this->apiCalls;
-	}
+    /**
+     * Returns the number of API calls made "today"
+     *
+     * @return int
+     */
+    public function getApiCalls()
+    {
+        return $this->apiCalls;
+    }
 
-	/**
-	 * Returns the current API key
-	 *
-	 * @return string
-	 */
-	public static function getApiKey()
-	{
-		return self::$apiKey;
-	}
+    /**
+     * Returns the current API key
+     *
+     * @return string
+     */
+    public static function getApiKey()
+    {
+        return self::$apiKey;
+    }
 }
