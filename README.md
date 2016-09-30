@@ -7,12 +7,12 @@
 [![License](https://poser.pugx.org/vertigolabs/overcast/license.svg)](https://packagist.org/packages/vertigolabs/overcast)
 [![Total Downloads](https://poser.pugx.org/vertigolabs/overcast/downloads.svg)](https://packagist.org/packages/vertigolabs/overcast)
 
-An easy to use wrapper for the [Forecast.io](https://forecast.io) API v2.
+An easy to use wrapper for the [Dark Sky](https://darksky.net/) API (formerly [Forecast.io](https://forecast.io)).
 
-Overcast will query the Forecast.io API for weather information for the longitude and latitude you specify. Additionally
 you may specify the specific time, past or present. 
+Overcast will query the Dark Sky API for weather information for the longitude and latitude you specify. Additionally
 
-See the [Forecast.io API documentation](https://developer.forecast.io/docs/v2) for more information.
+See the [Dark Sky API documentation](https://darksky.net/dev/docs) for more information.
 
 ## Installation
 Installation is as simple as using [Composer](http://getcomposer.org/):
@@ -26,7 +26,7 @@ Installation is as simple as using [Composer](http://getcomposer.org/):
 ```
 
 ## Client Adapters
-Overcast uses client adapters to connect to the Forecast.io API. This gives you the ability to create your own adapter for whatever HTTP client you'd like to use. This is especially useful for people who have special needs when dealing with retrieving data from third parties (firewalls, proxies, etc)
+Overcast uses client adapters to connect to the Dark Sky API. This gives you the ability to create your own adapter for whatever HTTP client you'd like to use. This is especially useful for people who have special needs when dealing with retrieving data from third parties (firewalls, proxies, etc)
 
 Overcast comes with two client adapters ready for use, FileGetContentsClientAdapter and GuzzleClientAdapter. You can also create your own by simply implementing the ClientAdapterInterface
  
@@ -41,10 +41,10 @@ $overcast = new \VertigoLabs\Overcast\Overcast('YOUR API KEY', new MyAwesomeClie
 ```
 
 ## Example
-Since the Forecast.io API is simple, Overcast is equally easy to use.
+Since the Dark Sky API is simple, Overcast is equally easy to use.
 Simply create an instance of the Overcast class, then call the getForecast() method.
 
-Overcast::getForecast() returns a nicely structured Forecast object which contains other data structures for handy access to all of the response data from Forecast.io.  
+Overcast::getForecast() returns a nicely structured Forecast object which contains other data structures for handy access to all of the response data from Dark Sky.
 
 ```php
 $overcast = new \VertigoLabs\Overcast\Overcast('YOUR API KEY');

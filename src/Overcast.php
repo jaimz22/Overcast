@@ -19,9 +19,9 @@ use VertigoLabs\Overcast\ClientAdapters\GuzzleClientAdapter;
 /**
  * Class Overcast
  *
- * The Overcast class provides access to the Forecast.io API
  *
  * @package VertigoLabs\Overcast
+ * The Overcast class provides access to the Dark Sky API
  */
 class Overcast
 {
@@ -38,7 +38,7 @@ class Overcast
      */
     private $apiCalls = 0;
     /**
-     * The adapter used to connect to the Forecast.io webservice
+     * The adapter used to connect to the Dark Sky webservice.
      * @var ClientAdapterInterface
      */
     private $adapter;
@@ -47,7 +47,7 @@ class Overcast
      * Construct the Overcast class.
      *
      * You may optionally specify an adapter class which is used
-     * to connect to the Forecast.io API. If no adapter is specified
+     * to connect to the Dark Sky API. If no adapter is specified
      * a default will be chosen. If the Guzzle client is available the
      * GuzzleAdapter will be chosen, otherwise the FileGetContentsAdapter
      * will be used.

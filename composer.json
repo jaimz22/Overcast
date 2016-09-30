@@ -1,6 +1,6 @@
 {
     "name": "vertigolabs/overcast",
-    "description": "An easy to use wrapper for the Forecast.io API",
+    "description": "An easy to use wrapper for the Dark Sky API (formerly Forecast.io)",
     "license": "MIT",
     "authors": [
         {
@@ -9,7 +9,7 @@
         }
     ],
     "suggest": {
-        "guzzlehttp/guzzle": "Allows for better handling of http connections to Forecast.io webservice"
+        "guzzlehttp/guzzle": "Allows for better handling of http connections to Dark Sky webservice"
     },
 	"autoload": {
 	  "psr-4": {
