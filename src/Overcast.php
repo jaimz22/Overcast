@@ -19,9 +19,9 @@ use VertigoLabs\Overcast\ClientAdapters\GuzzleClientAdapter;
 /**
  * Class Overcast
  *
+ * The Overcast class provides access to the Dark Sky API
  *
  * @package VertigoLabs\Overcast
- * The Overcast class provides access to the Dark Sky API
  */
 class Overcast
 {

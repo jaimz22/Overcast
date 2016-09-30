@@ -15,9 +15,9 @@ use VertigoLabs\Overcast\Overcast;
  * Class GuzzleClientAdapter
  *
  * The Guzzle client adapter uses Guzzle to connect to
+ * the Dark Sky API
  *
  * @package VertigoLabs\Overcast\ClientAdapters
- * the Dark Sky API
  */
 class GuzzleClientAdapter implements ClientAdapterInterface
 {
@@ -40,8 +40,8 @@ class GuzzleClientAdapter implements ClientAdapterInterface
     }
 
     /**
-     * form of an array
      * Returns the response data from the Dark Sky in the
+     * form of an array.
      *
      * @param float $latitude
      * @param float $longitude
