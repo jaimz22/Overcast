@@ -25,7 +25,7 @@ use VertigoLabs\Overcast\ClientAdapters\GuzzleClientAdapter;
  */
 class Overcast
 {
-    const API_ENDPOINT = 'https://api.forecast.io/forecast/';
+    const API_ENDPOINT = 'https://api.darksky.net/forecast/';
 
     /**
      * Private API Key
