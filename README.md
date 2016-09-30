@@ -9,8 +9,8 @@
 
 An easy to use wrapper for the [Dark Sky](https://darksky.net/) API (formerly [Forecast.io](https://forecast.io)).
 
-you may specify the specific time, past or present. 
 Overcast will query the Dark Sky API for weather information for the longitude and latitude you specify. Additionally
+you may specify the specific time, past or present.
 
 See the [Dark Sky API documentation](https://darksky.net/dev/docs) for more information.
 
