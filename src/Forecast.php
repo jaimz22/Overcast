@@ -15,7 +15,7 @@ use VertigoLabs\Overcast\ValueObjects\DataPoint;
  * Class Forecast
  *
  * The Forecast class represents the data returned
- * from the Forecast.io API
+ * from the Dark Sky API
  *
  * @package VertigoLabs\Overcast
  */
