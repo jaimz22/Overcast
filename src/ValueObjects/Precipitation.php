@@ -41,7 +41,8 @@ class Precipitation
 		$this->intensity = $intensity;
 		$this->maxIntensity = $maxIntensity;
 		if (!is_null($maxIntensityTime)){
-			$this->maxIntensityTime = (new \DateTime())->setTimestamp($maxIntensityTime);
+            $nowTime = new \DateTime();
+			$this->maxIntensityTime = $nowTime->setTimestamp($maxIntensityTime);
 		}
 		$this->probability = $probability;
 		$this->type = $type;

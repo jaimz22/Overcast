@@ -91,7 +91,8 @@ class DataPoint
 	public function __construct($data)
 	{
 		if (isset($data['time'])) {
-			$this->time = (new \DateTime())->setTimestamp($data['time']);
+		    $nowTime = new \DateTime();
+			$this->time = $nowTime->setTimestamp($data['time']);
 		}
 		if (isset($data['summary'])) {
 			$this->summary = $data['summary'];
@@ -100,10 +101,12 @@ class DataPoint
 			$this->icon = $data['icon'];
 		}
 		if (isset($data['sunriseTime'])) {
-			$this->sunriseTime = (new \DateTime())->setTimestamp($data['sunriseTime']);
+            $nowTime = new \DateTime();
+			$this->sunriseTime = $nowTime->setTimestamp($data['sunriseTime']);
 		}
 		if (isset($data['sunsetTime'])) {
-			$this->sunsetTime = (new \DateTime())->setTimestamp($data['sunsetTime']);
+            $nowTime = new \DateTime();
+			$this->sunsetTime = $nowTime->setTimestamp($data['sunsetTime']);
 		}
 		if (isset($data['moonPhase'])) {
 			$this->moonPhase = $data['moonPhase'];

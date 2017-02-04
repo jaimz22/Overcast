@@ -37,11 +37,13 @@ class Temperature
 		$this->current = $current;
 		$this->min = $min;
 		if (!is_null($minTime)){
-			$this->minTime = (new \DateTime())->setTimestamp($minTime);
+            $nowTime = new \DateTime();
+			$this->minTime = $nowTime->setTimestamp($minTime);
 		}
 		$this->max = $max;
 		if (!is_null($maxTime)){
-			$this->maxTime = (new \DateTime())->setTimestamp($maxTime);
+            $nowTime = new \DateTime();
+			$this->maxTime = $nowTime->setTimestamp($maxTime);
 		}
 	}
 

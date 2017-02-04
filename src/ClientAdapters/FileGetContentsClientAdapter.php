@@ -23,7 +23,7 @@ class FileGetContentsClientAdapter implements ClientAdapterInterface
 {
 	private $requestedUrl = null;
 	private $response = null;
-	private $responseHeaders = [];
+	private $responseHeaders = array();
 
 	/**
 	 * Returns the response data from the Forecast.io in the
@@ -68,14 +68,14 @@ class FileGetContentsClientAdapter implements ClientAdapterInterface
 	 */
 	private function parseForecastResponseHeaders($headers)
 	{
-		$responseHeaders = [
-			'cache' => [
+		$responseHeaders = array(
+			'cache' => array(
 				'maxAge'=>null,
 				'expires'=>null
-			],
+            ),
 			'responseTime'=>null,
 			'apiCalls'=>null
-		];
+        );
 		foreach ($headers as $header) {
 			switch (true) {
 				case (substr($header,0,14) === 'Cache-Control:'):

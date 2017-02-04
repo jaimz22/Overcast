@@ -92,7 +92,9 @@ class Overcast
 		if (!is_null($responseHeaders['cache']['maxAge'])) {
 			$cacheAge = $responseHeaders['cache']['maxAge'];
 		}elseif(!is_null($responseHeaders['cache']['expires'])) {
-			$cacheAge = (new \DateTime())->getTimestamp() - (new \DateTime($responseHeaders['cache']['expires']))->getTimestamp();
+		    $nowDateTime = new \DateTime();
+		    $cacheDateTime = new \DateTime($responseHeaders['cache']['expires']);
+			$cacheAge = $nowDateTime->getTimestamp() - $cacheDateTime->getTimestamp();
 		}
 
 			return new Forecast($response, $cacheAge, $responseHeaders['responseTime']);
