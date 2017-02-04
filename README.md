@@ -24,6 +24,7 @@ Installation is as simple as using [Composer](http://getcomposer.org/):
     }
 }
 ```
+Note: PHP 5.4 or greater is required
 
 ## Client Adapters
 Overcast uses client adapters to connect to the Dark Sky API. This gives you the ability to create your own adapter for whatever HTTP client you'd like to use. This is especially useful for people who have special needs when dealing with retrieving data from third parties (firewalls, proxies, etc)
