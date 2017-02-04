@@ -7,6 +7,8 @@
 [![License](https://poser.pugx.org/vertigolabs/overcast/license.svg)](https://packagist.org/packages/vertigolabs/overcast)
 [![Total Downloads](https://poser.pugx.org/vertigolabs/overcast/downloads.svg)](https://packagist.org/packages/vertigolabs/overcast)
 
+**This Branch is to be used for PHP versions below 5.4. If you use PHP >= 5.4 use the [master branch](https://github.com/jaimz22/Overcast/tree/master) or an [official release version](https://github.com/jaimz22/Overcast/releases).**
+
 An easy to use wrapper for the [Forecast.io](https://forecast.io) API v2.
 
 Overcast will query the Forecast.io API for weather information for the longitude and latitude you specify. Additionally
@@ -20,7 +22,7 @@ Installation is as simple as using [Composer](http://getcomposer.org/):
 ```
 {
     "require": {
-        "vertigolabs/overcast": "dev-master"
+        "vertigolabs/overcast": "dev-php53"
     }
 }
 ```
