@@ -124,12 +124,12 @@ class GuzzleClientAdapter implements ClientAdapterInterface
      *
      * @return array Returns the parsed header values.
      */
-    protected function parse_header($header)
+    protected function parseHeader($header)
     {
         static $trimmed = "\"'  \n\t\r";
         $params = $matches = [];
 
-        foreach ($this->normalize_header($header) as $val) {
+        foreach ($this->normalizeHeader($header) as $val) {
             $part = [];
             foreach (preg_split('/;(?=([^"]*"[^"]*")*[^"]*$)/', $val) as $kvp) {
                 if (preg_match_all('/<[^>]+>|[^=]+/', $kvp, $matches)) {
@@ -160,7 +160,7 @@ class GuzzleClientAdapter implements ClientAdapterInterface
      *
      * @return array Returns the normalized header field values.
      */
-    protected function normalize_header($header)
+    protected function normalizeHeader($header)
     {
         if (!is_array($header)) {
             return array_map('trim', explode(',', $header));
