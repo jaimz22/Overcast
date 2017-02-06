@@ -11,14 +11,14 @@ namespace VertigoLabs\Overcast;
  * Interface ClientAdapterInterface
  *
  * The Client Adapter interface is used to create HTTP clients for
- * connecting the the Forecast.io API
+ * connecting the the Dark Sky API
  *
  * @package VertigoLabs\Overcast
  */
 interface ClientAdapterInterface
 {
     /**
-     * Returns the response data from the Forecast.io in the
+     * Returns the response data from the Dark Sky in the
      * form of an array
      *
      * @param float $latitude
@@ -31,7 +31,7 @@ interface ClientAdapterInterface
     public function getForecast($latitude, $longitude, \DateTime $time = null, array $parameters = null);
 
     /**
-     * Returns the relevant response headers from the Forecast.io API
+     * Returns the relevant response headers from the Dark Sky API
      *
      * @return array
      */

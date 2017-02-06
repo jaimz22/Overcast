@@ -15,18 +15,18 @@ use VertigoLabs\Overcast\Overcast;
  *
  * The FileGetContents client adapter uses PHP's built in
  * file_get_contents function to retrieve data from the
- * Forecast.io API
+ * Dark Sky API
  *
  * @package VertigoLabs\Overcast\ClientAdapters
  */
-class FileGetContentsClientAdapter implements ClientAdapterInterface
+class FileGetContentsClientAdapter extends ClientAdapter implements ClientAdapterInterface
 {
     private $requestedUrl = null;
     private $response = null;
     private $responseHeaders = [];
 
     /**
-     * Returns the response data from the Forecast.io in the
+     * Returns the response data from the Dark Sky API in the
      * form of an array
      *
      * @param float $latitude
@@ -38,15 +38,7 @@ class FileGetContentsClientAdapter implements ClientAdapterInterface
      */
     public function getForecast($latitude, $longitude, \DateTime $time = null, array $parameters = null)
     {
-        $this->requestedUrl = Overcast::API_ENDPOINT . Overcast::getApiKey() . '/' . $latitude . ',' . $longitude;
-
-        if (!is_null($time)) {
-            $this->requestedUrl .= ',' . $time->getTimestamp();
-        }
-
-        if (!is_null($parameters)) {
-            $this->requestedUrl .= '?' . http_build_query($parameters);
-        }
+        $this->requestedUrl = $this->buildRequestURL($latitude, $longitude, $time, $parameters);
 
         $this->response = json_decode(file_get_contents($this->requestedUrl), true);
         $this->responseHeaders = $this->parseForecastResponseHeaders($http_response_header);
@@ -55,7 +47,7 @@ class FileGetContentsClientAdapter implements ClientAdapterInterface
     }
 
     /**
-     * Returns the relevant response headers from the Forecast.io API
+     * Returns the relevant response headers from the Dark Sky API
      *
      * @return array
      */

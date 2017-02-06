@@ -19,7 +19,7 @@ use VertigoLabs\Overcast\Overcast;
  *
  * @package VertigoLabs\Overcast\ClientAdapters
  */
-class GuzzleClientAdapter implements ClientAdapterInterface
+class GuzzleClientAdapter extends ClientAdapter implements ClientAdapterInterface
 {
     /**
      * @var Client
@@ -40,7 +40,7 @@ class GuzzleClientAdapter implements ClientAdapterInterface
     }
 
     /**
-     * Returns the response data from the Dark Sky in the
+     * Returns the response data from the Dark Sky API in the
      * form of an array.
      *
      * @param float $latitude
@@ -52,15 +52,7 @@ class GuzzleClientAdapter implements ClientAdapterInterface
      */
     public function getForecast($latitude, $longitude, \DateTime $time = null, array $parameters = null)
     {
-        $this->requestedUrl = Overcast::API_ENDPOINT . Overcast::getApiKey() . '/' . $latitude . ',' . $longitude;
-
-        if (!is_null($time)) {
-            $this->requestedUrl .= ',' . $time->getTimestamp();
-        }
-
-        if (!is_null($parameters)) {
-            $this->requestedUrl .= '?' . http_build_query($parameters);
-        }
+        $this->requestedUrl = $this->buildRequestURL($latitude, $longitude, $time, $parameters);
 
         $response = $this->guzzleClient->get($this->requestedUrl);
 
