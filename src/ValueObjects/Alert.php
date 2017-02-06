@@ -34,7 +34,8 @@ class Alert
 			$this->title = $data['title'];
 		}
 		if (isset($data['expires'])) {
-			$this->expires = (new \DateTime())->setTimestamp($data['expires']);
+            $nowTime = new \DateTime();
+			$this->expires = $nowTime->setTimestamp($data['expires']);
 		}
 		if (isset($data['description'])) {
 			$this->description = $data['description'];
