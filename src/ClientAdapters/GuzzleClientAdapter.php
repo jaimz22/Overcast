@@ -33,7 +33,7 @@ class GuzzleClientAdapter extends ClientAdapter implements ClientAdapterInterfac
      */
     public function __construct(Client $guzzleClient = null)
     {
-        if (is_null($guzzleClient)) {
+        if (NULL === $guzzleClient) {
             $guzzleClient = new Client();
         }
         $this->guzzleClient = $guzzleClient;
@@ -87,14 +87,14 @@ class GuzzleClientAdapter extends ClientAdapter implements ClientAdapterInterfac
     {
         $cacheControlHeader = null;
         if ($response->hasHeader('cache-control')) {
-            $cacheControlHeader = $this->parse_header($response->getHeader('cache-control'));
+            $cacheControlHeader = $this->parseHeader($response->getHeader('cache-control'));
             $cacheControlHeader = current($cacheControlHeader);
             $cacheControlHeader = (isset($cacheControlHeader['max-age'])?$cacheControlHeader['max-age']:null);
         }
 
         $expiresHeader = null;
         if ($response->hasHeader('expires')){
-            $expiresHeader = join(' ',array_column($this->parse_header($response->getHeader('expires')),0));
+            $expiresHeader = implode(' ',array_column($this->parseHeader($response->getHeader('expires')),0));
         }
 
         return array_filter([

@@ -31,7 +31,7 @@ class Overcast
      * Private API Key
      * @var string
      */
-    private static $apiKey = null;
+    private static $apiKey;
     /**
      * The number of API calls made today
      * @var int
@@ -58,7 +58,7 @@ class Overcast
     public function __construct($apiKey, ClientAdapterInterface $adapter = null)
     {
         self::$apiKey = $apiKey;
-        if (is_null($adapter)) {
+        if (NULL === $adapter) {
             if (class_exists('GuzzleHttp\Client', true)) {
                 $adapter = new GuzzleClientAdapter();
             } else {
@@ -85,14 +85,14 @@ class Overcast
             $response = $this->adapter->getForecast($latitude, $longitude, $time, $parameters);
             $responseHeaders = $this->adapter->getHeaders();
 
-            if (!is_null($responseHeaders['apiCalls'])) {
+            if (NULL !== $responseHeaders['apiCalls']) {
                 $this->apiCalls = $responseHeaders['apiCalls'];
             }
 
             $cacheAge = 0;
-            if (!is_null($responseHeaders['cache']['maxAge'])) {
+            if (NULL !== $responseHeaders['cache']['maxAge']) {
                 $cacheAge = $responseHeaders['cache']['maxAge'];
-            } elseif (!is_null($responseHeaders['cache']['expires'])) {
+            } elseif (NULL !== $responseHeaders['cache']['expires']) {
                 $cacheAge = (new \DateTime())->getTimestamp() - (new \DateTime($responseHeaders['cache']['expires']))->getTimestamp();
             }
 

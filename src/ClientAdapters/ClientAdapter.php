@@ -28,7 +28,7 @@ abstract class ClientAdapter implements ClientAdapterInterface
     {
         $requestUrl = Overcast::API_ENDPOINT . Overcast::getApiKey() . '/' . $latitude . ',' . $longitude;
 
-        if (!is_null($time)) {
+        if (NULL !== $time) {
             $requestUrl .= ',' . $time->getTimestamp();
         }
 
@@ -45,7 +45,7 @@ abstract class ClientAdapter implements ClientAdapterInterface
      */
     private function buildRequestParameters($parameters)
     {
-        if (is_null($parameters) || empty($parameters)) {
+        if (NULL === $parameters || empty($parameters)) {
             return null;
         }
 
