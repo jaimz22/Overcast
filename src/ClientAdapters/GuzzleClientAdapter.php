@@ -60,8 +60,8 @@ class GuzzleClientAdapter extends ClientAdapter implements ClientAdapterInterfac
 
         $this->responseHeaders = [
             'cache' => $cacheDirectives,
-            'responseTime' => (int)current($response->getHeader('x-response-time')),
-            'apiCalls' => (int)current($response->getHeader('x-forecast-api-calls'))
+            'responseTime' => (int)$response->getHeader('x-response-time'),
+            'apiCalls' => (int)$response->getHeader('x-forecast-api-calls')
         ];
         return json_decode($response->getBody(), true);
     }
