@@ -55,12 +55,13 @@ abstract class ClientAdapter implements ClientAdapterInterface
 
         $paramOut = '';
         foreach ($parameters as $key=>$value) {
-            $paramOut = $key.'=';
+            $paramOut .= $key.'=';
             if (is_array($value)){
                 $paramOut .= join(',', $value);
             }else{
                 $paramOut .= $value;
             }
+            $paramOut .= '&';
         }
 
         return $paramOut;
