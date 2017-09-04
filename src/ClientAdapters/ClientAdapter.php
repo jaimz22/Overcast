@@ -32,39 +32,9 @@ abstract class ClientAdapter implements ClientAdapterInterface
             $requestUrl .= ',' . $time->getTimestamp();
         }
 
-        $requestUrl .= '?' . $this->buildRequestParameters($parameters);
+        $requestUrl .= '?' . http_build_query($parameters);
 
         return $requestUrl;
-    }
-
-    /**
-     * Builds a propery parameter array for use in the query string of a Dark Sky API call
-     * @param $parameters
-     *
-     * @return string|null
-     */
-    private function buildRequestParameters($parameters)
-    {
-        if (NULL === $parameters || empty($parameters)) {
-            return null;
-        }
-
-        if (is_string($parameters)) {
-            return $parameters;
-        }
-
-        $paramOut = '';
-        foreach ($parameters as $key=>$value) {
-            $paramOut .= $key.'=';
-            if (is_array($value)){
-                $paramOut .= join(',', $value);
-            }else{
-                $paramOut .= $value;
-            }
-            $paramOut .= '&';
-        }
-
-        return $paramOut;
     }
 
     /**
